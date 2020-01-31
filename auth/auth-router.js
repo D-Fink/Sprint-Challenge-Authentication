@@ -18,7 +18,7 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   let { username, password } = req.body;
 
-    Users.findBy({username})
+    User.findBy({username})
     .then(user => {
         if(user && bcrypt.compareSync(password, user.password)){
             req.session.loggedIn = true;

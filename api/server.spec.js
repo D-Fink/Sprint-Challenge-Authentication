@@ -18,21 +18,19 @@ describe('server', function(){
             })
         })
 
-        // it('should return the created user', function(){
-        //     return request(server).post('/api/auth/register').send(user)
-        //     .then(res => {
-        //         expect(res.body).toBe({id: 1, username: 'abc'})
-        //     })
-        // })
+        it('should return the created user', function(){
+            return request(server).post('/api/auth/register').send(user)
+            .then(res => {
+                expect(res.body).toStrictEqual([{id: 1, username: 'abc'}])
+            })
+        })
     })
 
     describe('POST /login', function() {
-        it('should return 200 OK', function() {
-            const user2= {username: 'blah', password: 'blah'}
-            return request(server).post('/api/auth/login').send(user2)
-            .then(res => {
-                expect(res.status).toBe(200)
-            })
+        it('should return 200 OK', async() => {
+            await request(server).post('/api/auth/register').send(user);
+            let response = await request(server).post('/api/auth/login').send(user)
+            expect(response.status).toBe(200)
         })
 
         it('it should return 401 Invalid status', function(){
@@ -41,16 +39,6 @@ describe('server', function(){
             .then(res => {
                 expect(res.status).toBe(401)
             })
-        })
-    })
-
-    describe('GET /jokes', function() {
-        it('should return status 200 OK', function(){
-
-        })
-
-        it('should return 500 unathorized', function(){
-
         })
     })
 })
